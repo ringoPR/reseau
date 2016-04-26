@@ -35,13 +35,10 @@ public class Client_udp implements Runnable {
 
 				msgdenvoi = sc.nextLine();
 
-				if (change_connexion) {
-					
-					this.bufferConcurrent.inetsocketAddress = new InetSocketAddress(ip_svt1,port_udp_svt1);
-					this.bufferConcurrent.paquer_envoi.setSocketAddress(this.bufferConcurrent.inetsocketAddress);
-					this.change_connexion = false;
+				if(this.bufferConcurrent.deconnecter){
+					break ;
 				}
-
+				
 				if (msgdenvoi.split("\\s")[0].equals("WHOS")) {
 					envoi_WHOS(msgdenvoi);
 				} else if (msgdenvoi.split("\\s")[0].equals("TEST")) {
@@ -53,8 +50,7 @@ public class Client_udp implements Runnable {
 				}
 
 				if (change_connexion) {
-					this.bufferConcurrent.inetsocketAddress = new InetSocketAddress(ip_svt1,
-							port_udp_svt1);
+					this.bufferConcurrent.inetsocketAddress = new InetSocketAddress(this.bufferConcurrent.ip_svt1,this.bufferConcurrent.port_udp_svt1);
 					this.bufferConcurrent.paquer_envoi.setSocketAddress(this.bufferConcurrent.inetsocketAddress);
 					this.change_connexion = false;
 				}
@@ -63,6 +59,7 @@ public class Client_udp implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		sc.close();
 	}
 
 	private void envoi_WHOS(String msg) {
@@ -106,7 +103,7 @@ public class Client_udp implements Runnable {
 		
 		if (this.bufferConcurrent.get_msg_envoyer_entiter(msg.split("\\s")[1]) == null) {
 			if (taille_idm(msg.split("\\s")[1])) {
-				String envoi = msg+" "+this.bufferConcurrent.ip_entiter+" "+this.bufferConcurrent.port_entite+" "+this.ip_svt1+" "+this.port_udp_svt1;
+				String envoi = msg+" "+this.bufferConcurrent.ip_entiter+" "+this.bufferConcurrent.port_entite+" "+this.bufferConcurrent.ip_svt1+" "+this.bufferConcurrent.port_udp_svt1;
 				if (taille_msg(envoi)) {
 					envoi_entite_suivant(envoi);
 					this.bufferConcurrent.put_msg_envoyer_entiter(msg.split("\\s")[1],msg.split("\\s")[0]);
@@ -127,10 +124,10 @@ public class Client_udp implements Runnable {
 	
 	private void envoi_entite_suivant(String msg) {
 		try {
-			byte buff [] ;
-			buff = msg.getBytes();
-			this.bufferConcurrent.paquer_envoi.setData(buff);
-			this.bufferConcurrent.client.send(this.bufferConcurrent.paquer_envoi);
+
+			this.bufferConcurrent.data_envoi = msg.getBytes();
+			this.bufferConcurrent.paquer_envoi.setData(this.bufferConcurrent.data_envoi);
+			this.bufferConcurrent.serveur_envoi.send(this.bufferConcurrent.paquer_envoi);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -147,21 +144,13 @@ public class Client_udp implements Runnable {
 		return (idm_taille.length < this.SEZE_IDM);
 	}
 
-	public String get_protocole_msg(String msg) {
-		return msg.split("\\s")[0];
-	}
+	
 
 	
-	public void set_port_svt1(int port_suivant) {
-		this.port_udp_svt1 = port_suivant;
-	}
+	
 
-	public void set_addr_svt1(String add_svt) {
-		this.ip_svt1 = add_svt;
-	}
+	
 
-	public void set_change_connexion(boolean change) {
-		this.change_connexion = change;
-	}
 
 }
+

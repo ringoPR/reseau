@@ -9,17 +9,20 @@ public class Bufferconcurrent {
 	public int port_entite ;
 	public String ip_entiter ;
 	public int port_udp_svt1;
-	private String ip_svt1;
+	public String ip_svt1;
 	public byte data_recoi[];
 	public byte data_envoi[];
-	public DatagramSocket client;
-	public DatagramPacket paquer_envoi;
-	public InetSocketAddress inetsocketAddress;
-	
 	public DatagramSocket serveur_recoi;
 	public DatagramSocket serveur_envoi;
+	
+	public DatagramPacket paquer_envoi;
 	public DatagramPacket paquer_recoi;
+	public InetSocketAddress inetsocketAddress;
+	public boolean deconnecter = false ;
 	private final int BUFFER_SIZE = 512;
+	
+	
+	public DatagramSocket diffusion;
 	
 	
 	
@@ -37,11 +40,11 @@ public class Bufferconcurrent {
 		this.port_udp_svt1 = port_svt ;
 		this.ip_svt1 = ip_svt ;
 		try {
-			
 			/*                 reception des données             */
-			data_recoi = new byte[BUFFER_SIZE];
+			
+			this.data_recoi = new byte[BUFFER_SIZE];
 			this.serveur_recoi  = new DatagramSocket(this.port_entite);
-			this.paquer_recoi   =  new DatagramPacket(data_recoi, BUFFER_SIZE);
+			this.paquer_recoi   =  new DatagramPacket(this.data_recoi, this.BUFFER_SIZE);
 			
 			System.out.println("port entite = "+this.port_entite);
 			
@@ -49,9 +52,12 @@ public class Bufferconcurrent {
 			/*                 envoi des données                                       */
 			this.data_envoi = new byte[BUFFER_SIZE];
 			this.inetsocketAddress = new  InetSocketAddress(ip_svt, port_udp_svt1);
-			this.client = new DatagramSocket();
+			this.serveur_envoi = new DatagramSocket();
 			this.paquer_envoi = new DatagramPacket(data_envoi,BUFFER_SIZE,inetsocketAddress);
-
+			
+			
+			/*                diffusion anneau 1                                               */
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -59,7 +65,9 @@ public class Bufferconcurrent {
 	}
 	
 
-	public void set_change_connexion(int port , String adress){
+	public void set_change_connexion(int port , String adress){ // changement de connexion 
+		this.ip_svt1 = adress ;
+		this.port_udp_svt1 = port ;
 		this.inetsocketAddress  = new InetSocketAddress(adress, port);
 		this.paquer_envoi.setSocketAddress(inetsocketAddress);
 	}
@@ -103,7 +111,14 @@ public class Bufferconcurrent {
 		this.ip_svt1 = ip_svt;
 	}
 	
+	
+	public void close(){
+		this.deconnecter = true ; 
+		this.serveur_recoi.close();
+		this.serveur_envoi.close();
+	}
 		
 	
 
 }
+

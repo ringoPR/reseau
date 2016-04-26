@@ -24,7 +24,6 @@ public class Client_tcp {
 
 	public void connect_client() {
 		try {
-			System.out.println("momo "+this.address);
 			this.client = new Socket(this.address, this.port);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,3 +96,4 @@ public class Client_tcp {
 	}
 
 }
+

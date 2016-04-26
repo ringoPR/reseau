@@ -47,7 +47,6 @@ public class Serveur_tcp implements Runnable {
 		try {
 			Bufferconcurrent bufferconcurrent = new Bufferconcurrent(this.identifiant,this.port_udp,this.adr_entite,this.port_udp_svt1,this.ip_svt1) ;
 			
-		
 			Serveur_udp serveur_udp = new Serveur_udp(identifiant,adr_entite, port_udp ,port_udp_svt1 ,ip_svt1 , bufferconcurrent) ;
 			Thread threaserveur_udp = new Thread(serveur_udp);
 			threaserveur_udp.start();
@@ -65,6 +64,7 @@ public class Serveur_tcp implements Runnable {
 
 				String msg_recu = "";
 				client = serverSocket.accept();
+				System.out.println("connexion tcp ");
 				
 
 				BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -99,7 +99,7 @@ public class Serveur_tcp implements Runnable {
 						this.port_udp_svt1 = string_mani.get_port();
 						
 						if(deja_client_udp){
-							client_udp.set_port_svt1(port_udp_svt1);
+//							client_udp.set_port_svt1(port_udp_svt1);
 							bufferconcurrent.set_ip_suivant(ip_svt1);
 							bufferconcurrent.set_port_suivant(port_udp_svt1);
 							bufferconcurrent.change_connexion();
@@ -108,9 +108,8 @@ public class Serveur_tcp implements Runnable {
 				
 				if(!deja_client_udp){ 
 					bufferconcurrent.set_ip_suivant(this.ip_svt1);
-					bufferconcurrent.set_port_suivant(port_udp_svt1);
-					bufferconcurrent.set_change_connexion(port_udp_svt1, ip_svt1);
-					client_udp.set_change_connexion(true);
+					bufferconcurrent.set_port_suivant(this.port_udp_svt1);
+					bufferconcurrent.set_change_connexion(this.port_udp_svt1, this.ip_svt1);
 					deja_client_udp = true ;
 				}
 				
@@ -141,3 +140,4 @@ public class Serveur_tcp implements Runnable {
 	
 
 }
+
