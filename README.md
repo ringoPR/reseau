@@ -1,4 +1,8 @@
-ne adresse IPv4 de multi-diffusion (qui servira pour signaler la panne du réseau) :  224.0.0.0 à 239.255.255.255
+
+#Projet Protocol Ringo
+=======================
+
+Adresse IPv4 de multi-diffusion (qui servira pour signaler la panne du réseau) :  224.0.0.0 à 239.255.255.255
 
 Integer.parseInt(args[4]) 		: port_tcp_serveur_entite
 identifiant = Integer.parseInt(args[3]) : identifiant de l'entité
