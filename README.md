@@ -34,13 +34,13 @@ java Entité_bis 4243 localhost 9996 4244 1254
 
 exemple de duplication  : 
 
-
-|   ||         | 
-java Entité_bis
-java Entité_bis  4242 localhost 9997 4243 1
-java Entité_bis  4242 localhost 9996 4244 2
+<p>
+|   ||         | <br>
+java Entité_bis<br>
+java Entité_bis  4242 localhost 9997 4243 1<br>
+java Entité_bis  4242 localhost 9996 4244 2<br>
 java Entité_bis  4243 localhost 9995 4245 3
 java Entité_bis  4243 localhost 9994 4256 4 dup
 java Entité_bis  4243 localhost 9992 4257 5 dup
- 
+</p> 
 
