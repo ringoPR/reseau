@@ -43,7 +43,6 @@ public class Serveur_tcp implements Runnable {
 		ServerSocket serverSocket = null;
 		Client_udp client_udp= null ;
 		
-		
 		try {
 			Bufferconcurrent bufferconcurrent = new Bufferconcurrent(this.identifiant,this.port_udp,this.adr_entite,this.port_udp_svt1,this.ip_svt1) ;
 			
@@ -58,6 +57,14 @@ public class Serveur_tcp implements Runnable {
 			client_udp = new Client_udp(this.port_m_d_1,this.ip_m_d_1,bufferconcurrent);
 			Thread threadClient_udp = new Thread(client_udp);
 			threadClient_udp.start();
+			
+			EnvoiMulticast envoiMulticast = new EnvoiMulticast(this.port_m_d_1, this.ip_m_d_1, bufferconcurrent);
+			Thread thread_multicast = new Thread(envoiMulticast);
+			thread_multicast.start();
+			
+			ReceiveMulticast receiveMulticast = new ReceiveMulticast(this.port_m_d_1, this.ip_m_d_1);
+			Thread threadReceivMulicast = new Thread(receiveMulticast);
+			threadReceivMulicast.start();
 			
 			while (true) {
 				while(true){
@@ -102,7 +109,7 @@ public class Serveur_tcp implements Runnable {
 //							client_udp.set_port_svt1(port_udp_svt1);
 							bufferconcurrent.set_ip_suivant(ip_svt1);
 							bufferconcurrent.set_port_suivant(port_udp_svt1);
-							bufferconcurrent.change_connexion();
+							
 						}
 				}
 				
@@ -140,4 +147,3 @@ public class Serveur_tcp implements Runnable {
 	
 
 }
-

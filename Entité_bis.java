@@ -1,6 +1,5 @@
 import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+
 
 public class Entité_bis {
 
@@ -8,7 +7,7 @@ public class Entité_bis {
 	static int port_ecou_udp = 9998; // inferieur a 9999
 	static String adr_ip_machine_suivant;
 	static int port_ecou_udp_mach_suivant = 0;
-	static String add_ipv4_multi_diff1 = "254.255.255.255";
+	static String add_ipv4_multi_diff1 = "225.6.2.5";
 	static String add_ipv4_multi_diff2 = null;
 	static int port_multi_diff1 = 9980; // inferieur a 9999
 	static int port_multi_diff2 = -1 ;
@@ -142,4 +141,3 @@ public class Entité_bis {
 	
 
 }
-

@@ -79,4 +79,3 @@ public class String_mani {
 		return this.port_dupl;
 	}
 }
-

@@ -8,8 +8,7 @@ public class Client_udp implements Runnable {
 	private final int BUFFER_SIZE = 512;
 	private final int SEZE_IDM = 8;
 
-	private int port_udp_svt1;
-	private String ip_svt1;
+
 	private String ip_m_d_1;
 	private int port_d_1;
 	private boolean change_connexion = false;
@@ -32,9 +31,24 @@ public class Client_udp implements Runnable {
 
 		while (true) {
 			try {
-
+				System.out.println("cpt = "+this.bufferConcurrent.cpt);
+				if(this.bufferConcurrent.envoi_test){
+					while(!this.bufferConcurrent.recu_test){
+						
+						if((System.currentTimeMillis()-this.bufferConcurrent.startTime) > this.bufferConcurrent.TIME_MAX){
+							this.bufferConcurrent.envoi_down  = true ;
+							this.bufferConcurrent.cpt = 100;
+							this.bufferConcurrent.envoi_test = false ;
+							this.bufferConcurrent.recu_test = true ;
+							break ;
+						}
+					}
+				}
 				msgdenvoi = sc.nextLine();
-
+				
+			
+			
+				
 				if(this.bufferConcurrent.deconnecter){
 					break ;
 				}
@@ -45,6 +59,8 @@ public class Client_udp implements Runnable {
 					envoi_TEST(msgdenvoi);
 				}else if(msgdenvoi.split("\\s")[0].equals("GBYE")){
 					envoi_GBYE(msgdenvoi);
+				}else if(msgdenvoi.split("\\s")[0].equals("PROTOCOLE")){
+					envoi_PROTOCOLE(msgdenvoi);	
 				} else {
 					System.out.println("erreur de protocole de msg ");
 				}
@@ -86,7 +102,9 @@ public class Client_udp implements Runnable {
 		if (this.bufferConcurrent.get_msg_envoyer_entiter(msg.split("\\s")[1]) == null) {
 			if (taille_idm(msg.split("\\s")[1])) {
 				if (taille_msg(msg)) {
-					envoi_entite_suivant(msg);
+					String msg_envoi = msg+" "+this.ip_m_d_1+" "+this.port_d_1;
+					this.bufferConcurrent.start_envoi_test(System.currentTimeMillis()); // le temps commenece ici 
+					envoi_entite_suivant(msg_envoi);
 					this.bufferConcurrent.put_msg_envoyer_entiter(msg.split("\\s")[1],msg.split("\\s")[0]);
 				} else {
 					System.out.println("la taille du message depasse "+ this.BUFFER_SIZE + " octet");
@@ -106,6 +124,25 @@ public class Client_udp implements Runnable {
 				String envoi = msg+" "+this.bufferConcurrent.ip_entiter+" "+this.bufferConcurrent.port_entite+" "+this.bufferConcurrent.ip_svt1+" "+this.bufferConcurrent.port_udp_svt1;
 				if (taille_msg(envoi)) {
 					envoi_entite_suivant(envoi);
+					this.bufferConcurrent.put_msg_envoyer_entiter(msg.split("\\s")[1],msg.split("\\s")[0]);
+				} else {
+					System.out.println("la taille du message depasse "+ this.BUFFER_SIZE + " octet");
+				}
+			} else {
+				System.out.println("l identifiant depasse la taille de "+ this.SEZE_IDM);
+			}
+		} else {
+			System.out.println("vous avez deja envoyer un msg avec l identifiant "+ msg.split("\\s")[1]);
+		}
+
+	}
+	
+	private void envoi_PROTOCOLE(String msg) {
+
+		if (this.bufferConcurrent.get_msg_envoyer_entiter(msg.split("\\s")[1]) == null) {
+			if (taille_idm(msg.split("\\s")[1])) {
+				if (taille_msg(msg)) {
+					envoi_entite_suivant(msg);
 					this.bufferConcurrent.put_msg_envoyer_entiter(msg.split("\\s")[1],msg.split("\\s")[0]);
 				} else {
 					System.out.println("la taille du message depasse "+ this.BUFFER_SIZE + " octet");
@@ -153,4 +190,3 @@ public class Client_udp implements Runnable {
 
 
 }
-

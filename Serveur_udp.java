@@ -4,7 +4,7 @@
 public class Serveur_udp implements Runnable {
 
 
-//	private byte data_envoi[];
+
 	private Bufferconcurrent bufferConcurrent ;
 	
 
@@ -12,9 +12,6 @@ public class Serveur_udp implements Runnable {
 	public Serveur_udp(String identifiant,String adr_entite, int port_udp ,int port_svt,String add_svt,Bufferconcurrent bufferConcurrent) {
 
 			this.bufferConcurrent = bufferConcurrent;
-		
-			
-
 	}
 
 	@Override
@@ -22,9 +19,8 @@ public class Serveur_udp implements Runnable {
 		
 		while (true) {		
 			try {
-				System.out.println("port suivant = "+this.bufferConcurrent.port_udp_svt1);
-				System.out.println("adress suivant = "+this.bufferConcurrent.ip_svt1);
 			
+
 				if(this.bufferConcurrent.deconnecter){
 					break ;
 				}
@@ -52,6 +48,9 @@ public class Serveur_udp implements Runnable {
 				if(msg_recu.split("\\s")[0].equals("EYBG")){
 					msg_EYBG(msg_recu);
 				}
+				if(msg_recu.split("\\s")[0].equals("PROTOCOLE")){
+					msg_protocole(msg_recu);
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -69,13 +68,10 @@ public class Serveur_udp implements Runnable {
 	private void msg_GBYE(String msg_recu){
 		
 		if(msg_recu.split("\\s")[2].equals(this.bufferConcurrent.ip_svt1) && (Integer.parseInt(msg_recu.split("\\s")[3])== this.bufferConcurrent.port_udp_svt1) ){
-			System.out.println("je suis bien dans le predesseseur");
 			String msg_envoi ="EYBG "+msg_recu.split("\\s")[1]; 
 			envoi_entite_suivant(msg_envoi);
 			this.bufferConcurrent.set_change_connexion(Integer.parseInt(msg_recu.split("\\s")[5]), msg_recu.split("\\s")[4]);
-			System.out.println("aprés le changement");
-			System.out.println("ip svt "+this.bufferConcurrent.ip_svt1);
-			System.out.println("port svt "+this.bufferConcurrent.port_udp_svt1);
+			
 			
 		}else{
 			envoi_entite_suivant(msg_recu);
@@ -107,7 +103,10 @@ public class Serveur_udp implements Runnable {
 	private void msg_TEST(String msg){
 		try{
 			if(this.bufferConcurrent.get_msg_envoyer_entiter(msg.split("\\s")[1]) != null){
-//				envoi_entite_suivant(msg);
+//				System.out.println("je suis dans l entité qui a envoyé le teste ");
+				this.bufferConcurrent.envoi_test = false ;
+				this.bufferConcurrent.recu_test = true ; 
+//				this.bufferConcurrent.initialisation_temps();
 				return ;
 			}
 			envoi_entite_suivant(msg);
@@ -136,9 +135,20 @@ public class Serveur_udp implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	private void msg_protocole(String msg){
+		try{
+			if(this.bufferConcurrent.get_msg_envoyer_entiter(msg.split("\\s")[1]) != null){
+				
+				return ;
+			}
+			envoi_entite_suivant(msg);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 		
 	
 
 	
 }
-

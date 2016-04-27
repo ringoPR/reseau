@@ -26,12 +26,20 @@ public class Bufferconcurrent {
 	
 	
 	
-	private boolean change_connexion = false;
+	
 	
 	private HashMap<String, Boolean> les_messages_recu = new HashMap<String,Boolean>() ;
 	private HashMap<String , String> les_messages_envoyer_entiter  = new HashMap<String,String>() ;
 	private HashMap<String , Boolean> les_messages_envoyer_anneau =new HashMap<String,Boolean>();;
 	
+	/*   pour le msg TEST    */
+	public boolean recu_test = false ; 
+	public boolean envoi_test = false ; 
+	public boolean envoi_down = false ;
+	public long startTime  = 0; 
+	public long endTime = 0 ; 
+	public final long  TIME_MAX = 5000; 
+	int cpt = 0 ;
 	
 	public Bufferconcurrent(String id , int port_entite,String ip_entite,int port_svt,String ip_svt) {
 		this.identifiant = id;
@@ -56,7 +64,7 @@ public class Bufferconcurrent {
 			this.paquer_envoi = new DatagramPacket(data_envoi,BUFFER_SIZE,inetsocketAddress);
 			
 			
-			/*                diffusion anneau 1                                               */
+		
 			
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -100,9 +108,7 @@ public class Bufferconcurrent {
 		return this.les_messages_recu.get(msg);
 	}
 	
-	public void change_connexion(){
-		this.change_connexion =true ;
-	}
+	
 	
 	public void set_port_suivant(int port_svt){
 		this.port_udp_svt1 = port_svt ;
@@ -111,6 +117,19 @@ public class Bufferconcurrent {
 		this.ip_svt1 = ip_svt;
 	}
 	
+	
+	public void start_envoi_test(long time ){
+		this.envoi_test = true ;
+		this.recu_test = false ;
+		this.startTime = time;
+	}
+	
+/*	public void initialisation_temps(){
+		this.envoi_test = false ;
+		recu_test = false ; 
+		this.startTime = 0 ;
+		this.endTime = 0 ;
+	}*/
 	
 	public void close(){
 		this.deconnecter = true ; 
@@ -121,4 +140,3 @@ public class Bufferconcurrent {
 	
 
 }
-
