@@ -99,6 +99,6 @@ Remarque au niveau du Transfert de fichier 3:
 Version C:
 ==========
 	Lancer la commande :<br>
-		./start =>pour initialiser l'anneau<br>
+		./start =>pour initialiser l'anneau
 	 pour s'inserer il faut se connecter :<br>
-	 	./start 4242 addr_ip port_udp port_tcp num_entite<br>
+	 	./start 4242 addr_ip port_udp port_tcp num_entite
