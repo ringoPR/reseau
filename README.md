@@ -64,7 +64,7 @@ java Entité_bis 4243 127.0.0.1 9994 4246 4 dup 225.6.2.3 9983<br>
 java Entité_bis 4243 127.0.0.1 9993 4240 5 // ici l entité va refusé parceque elle est deja dupliquer<br>
 java Entité_bis 4246 127.0.0.1 9992 4247 6<br>
 
-Les commande utiliser :
+Les commandes utiliser :
 ========================
 	info      : donne les information de l'entité et les differente ip utiliser<br>
 	clear     : efface le terminal<br>
@@ -87,7 +87,7 @@ Il faut ajouter lors de l'éxcution du programme le paramétre -Djava.net.prefer
 
 Remarque 2:
 ===========
-	pour le message  [GBYE␣idm␣ip␣port␣ip-succ␣port-succ] : faut juste taper GBYE idm car on concatener automatiquement le reste , et si l'entité et dupliquer un menu vous demandera  dans quelle anneau est qu elle ip-succ et port-succ<br>
+	pour le message  [GBYE␣idm␣ip␣port␣ip-succ␣port-succ] : faut juste taper GBYE idm car on concatener automatiquement le reste <br>Et si l'entité et dupliquer un menu vous demandera  dans quelle anneau est qu elle ip-succ et port-succ<br>
 
 Remarque au niveau du Transfert de fichier 3:
 =============================================
@@ -96,8 +96,8 @@ Remarque au niveau du Transfert de fichier 3:
 	taille_fichier<br>
 	in_shared<br>
 
-	Version C:
-	==========
+Version C:
+==========
 	Lancer la commande :<br>
 		./start =>pour initialiser l'anneau<br>
 	 pour s'inserer il faut se connecter :<br>
