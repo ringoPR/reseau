@@ -194,7 +194,7 @@ public class Serveur_udp implements Runnable {
 			int compte = 0 ;
 			for (int i = 0; i < taille_nummess; i++) {
 				String morceau = new String (Arrays.copyOfRange(arrayfile, compte, compte+463));
-				compte = compte + 463 ;
+				compte = compte + 463 + 1 ;
 				byte morceau_byte[] = morceau.getBytes();
 					try {
 						Thread.sleep(100);
