@@ -24,7 +24,7 @@ public class Entité_bis {
 
 
 	public static void main(String[] args) {
-
+		String_mani string_mani = new String_mani();
 		String beginning = "";
 
 		boolean is_duplicate = false ;
@@ -63,8 +63,8 @@ public class Entité_bis {
 				System.exit(0);
 			}
 			try {
-				ip_m_d_2 = args[6];
-				p_m_d_2 = Integer.parseInt(args[7])  ;
+				ip_m_d_2 =string_mani.codageIp(args[6]);
+				p_m_d_2 = Integer.parseInt(string_mani.codagePort(Integer.parseInt(args[7])))  ;
 			}catch(NumberFormatException e){
 				e.printStackTrace();
 				mes_erreur() ;
@@ -76,6 +76,7 @@ public class Entité_bis {
 		try {
 
 			if (!beginning.equals("beginning")) {
+
 
 
 				Client_tcp client_tcp = new Client_tcp(port_tcp_a_communiquer, ip_entité);
@@ -96,10 +97,10 @@ public class Entité_bis {
 
 
 				if (protocole_msg.equals("WELC")) {
-					ip_m_svt = msg_recu.split("\\s")[1];
-					p_svt = Integer.parseInt(msg_recu.split("\\s")[2]);
-					ip_m_d_1 = msg_recu.split("\\s")[3];
-					p_m_d_1 = Integer.parseInt(msg_recu.split("\\s")[4]);
+					ip_m_svt  = string_mani.codageIp(msg_recu.split("\\s")[1]);
+					p_svt = Integer.parseInt(string_mani.codagePort(Integer.parseInt(msg_recu.split("\\s")[2])));
+					ip_m_d_1 = string_mani.codageIp(msg_recu.split("\\s")[3]);
+					p_m_d_1 = Integer.parseInt(string_mani.codagePort(Integer.parseInt(msg_recu.split("\\s")[4]))) ;
 
 //					String ip_local = Inet4Address.getLocalHost().getHostAddress();
 					String ip_local = get_Ip_local() ;
@@ -123,8 +124,8 @@ public class Entité_bis {
 						System.out.println("msg_recu : "+msg_recu);
 						if((msg_recu.split("\\s")[0]).equals("ACKD")){
 							System.out.println("duplication reussite");
-							p_svt = Integer.parseInt(msg_recu.split("\\s")[1]);
-							ip_m_svt=args[1];
+							p_svt =  Integer.parseInt(string_mani.codagePort(Integer.parseInt(msg_recu.split("\\s")[1]))) ;
+							ip_m_svt=string_mani.codageIp(args[1]);
 						}
 							}
 						client_tcp.close_br_client();
@@ -134,13 +135,13 @@ public class Entité_bis {
 
 
 			if (debut_anneau ) { // si par defaut
-				p_svt = p_ecoute_udp;
-				ip_m_svt = get_Ip_local();
-				ip_entité = get_Ip_local();
+				p_svt = Integer.parseInt(string_mani.codagePort(p_ecoute_udp));
+				ip_m_svt = string_mani.codageIp(get_Ip_local());
+				ip_entité = string_mani.codageIp(get_Ip_local());
 
 			}
 
-			ip_entité = get_Ip_local() ;
+			ip_entité = string_mani.codageIp(get_Ip_local()) ;
 			System.out.println("mon adresse ip locale : "+ip_entité+" mon port TCP "+port_tcp_serveur_entite);
 			Serveur_tcp serveur_tcp ;
 			Thread thread_tcp ;
