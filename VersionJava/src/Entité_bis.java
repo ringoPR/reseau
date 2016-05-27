@@ -30,7 +30,7 @@ public class Entité_bis {
 		boolean is_duplicate = false ;
 		boolean debut_anneau = true;
 
-		if (args.length == 1) {
+		if (args.length == 0) {
 			beginning = "beginning";
 		}
 
@@ -134,13 +134,13 @@ public class Entité_bis {
 
 			if (debut_anneau ) { // si par defaut
 				p_svt = p_ecoute_udp;
-				ip_m_svt = args[0];
-				ip_entité = args[0];
+				ip_m_svt = get_Ip_local();
+				ip_entité = get_Ip_local();
 
 			}
 
 			ip_entité = get_Ip_local() ;
-			System.out.println("mon adresse ip locale : "+ip_entité);
+			System.out.println("mon adresse ip locale : "+ip_entité+" mon port TCP "+port_tcp_serveur_entite);
 			Serveur_tcp serveur_tcp ;
 			Thread thread_tcp ;
 
