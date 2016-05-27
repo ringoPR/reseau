@@ -92,6 +92,7 @@ public class Serveur_tcp implements Runnable {
 				pw.flush();
 
 				msg_recu = br.readLine();
+				System.out.println("msg_recu :"+msg_recu);	
 				
 				this.msg_protocole = msg_recu.split("\\s")[0];
 

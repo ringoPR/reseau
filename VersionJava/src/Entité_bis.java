@@ -107,7 +107,7 @@ public class Entité_bis {
 					if (!is_duplicate) {
 						client_tcp.write_client("NEWC " + String_mani.codageIp(ip_local) + " "+ String_mani.codagePort(p_ecoute_udp) + "\n");// l ip du client et son port
 						msg_recu = client_tcp.readligne_client();
-
+						System.out.println("msg recu : "+msg_recu);
 						if (msg_recu.equals("ACKC")) {
 							System.out.println("insertion reussite ");
 						} else {
@@ -119,6 +119,7 @@ public class Entité_bis {
 
 						client_tcp.write_client("DUPL "+String_mani.codageIp(ip_local) +" "+String_mani.codagePort(p_ecoute_udp) +" "+String_mani.codageIp(ip_m_d_2)+" "+String_mani.codagePort(p_m_d_2)+"\n");
 						msg_recu = client_tcp.readligne_client();
+						System.out.println("msg_recu : "+msg_recu);
 						if((msg_recu.split("\\s")[0]).equals("ACKD")){
 							System.out.println("duplication reussite");
 							p_svt = Integer.parseInt(msg_recu.split("\\s")[1]);
@@ -139,6 +140,7 @@ public class Entité_bis {
 			}
 
 			ip_entité = get_Ip_local() ;
+			System.out.println("mon adresse ip locale : "+ip_entité);
 			Serveur_tcp serveur_tcp ;
 			Thread thread_tcp ;
 
