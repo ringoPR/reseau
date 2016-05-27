@@ -4,9 +4,9 @@ Réalisé dans le cadre du module Programmation Réseaux PR6<br>
 Licence 3 informatique<br>
 Université Paris Denis Diderot<br>
 
-=============================================
+==============================================================
 Auteur : Belkacem OUALITEN & Bachir CHELBI & Tahi Mohand Tahar
-=============================================
+==============================================================
 
 
 Ressources nécessaires :
@@ -29,12 +29,12 @@ La circulation des messages sur un anneau se fait de façon unidirectionnelle<br
 
 Exécution :
 ===========
-	Version JAVA:
-	=============
+	Version JAVA: 
+        ===========
 
 Pour executer le programe il faut rentrer dans le dossier bin est suivre les exemple ci dessou<br>
 
-java Entité_bis 127.0.0.1 : premier lancement par defaut sont port_udp = 9998<br>
+java Entité_bis           : premier lancement par defaut sont port_udp = 9998<br>
 			  : port_ecou_udp_mach_suivant = 9998 c'est le meme sinon ça creer pas d'anneau<br>
 			  : port_multi_diff = 9980<br>
 			  : port_tcp_serveur_entite = 4242<br>
@@ -79,6 +79,15 @@ identifiant = Integer.parseInt(args[3]) : identifiant de l'entité<br>
 Integer.parseInt(args[2]) : port d ecoute udp de l entiré<br>
 addr_tcp = args[1] : adress tcp ou l entité va se connecter<br>
 port_tcp = Integer.parseInt(args[0]) : port tcp ou l entité va se connecter<br>
+
+
+pour le message  [GBYE␣idm␣ip␣port␣ip-succ␣port-succ] : faut juste taper GBYE idm car on concatener automatiquement le reste , et
+	si l'entité et dupliquer un menu vous demandera  dans quelle anneau est qu elle ip-succ et port-succ
+
+Protocole ajouter :
+===================
+On a ajouter un protocole qui ressemble un peut a  WHOS sanf que dans le cas du nouveau protocole c'est une entité veux savoir qui a envoyé<br>
+un message de idm par exemple elle recoi un message WHOS 123 , l'entité envoi un msg [WMSG␣idm] ou idm = 123 , le message fait le tour<br> de l'anneau jusqu'a ce qu'il arrive a l'entité qui a envoyé WHOS 123 celle ci lui repend par [MMSG␣idm␣id␣ip␣port] <br>
 
 
 Remarque 1:
