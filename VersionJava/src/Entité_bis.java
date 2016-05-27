@@ -80,7 +80,7 @@ public class Entité_bis {
 
 				Client_tcp client_tcp = new Client_tcp(port_tcp_a_communiquer, ip_entité);
 				String msg_recu = client_tcp.readligne_client();
-
+				System.out.println("msg recu : "+msg_recu);
 				if((msg_recu.split("\\s")[0]).equals("NOTC")){
 					System.out.println("l entité refuse toute demande car elle est dupliquer");
 					System.exit(0);
@@ -107,6 +107,7 @@ public class Entité_bis {
 					if (!is_duplicate) {
 						client_tcp.write_client("NEWC " + String_mani.codageIp(ip_local) + " "+ String_mani.codagePort(p_ecoute_udp) + "\n");// l ip du client et son port
 						msg_recu = client_tcp.readligne_client();
+
 						System.out.println("msg recu : "+msg_recu);
 						if (msg_recu.equals("ACKC")) {
 							System.out.println("insertion reussite ");
